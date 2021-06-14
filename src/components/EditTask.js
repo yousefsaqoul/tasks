@@ -1,37 +1,43 @@
-import React,{ useState, useContext} from 'react'
+import React,{ useState, useContext, useEffect} from 'react'
 import {TaskContext} from '../context/TaskContext'
-import TaskList from './TaskList'
 export default function EditTask () {
-    const {findTask} = useContext(TaskContext)
+    const {editTask,items} = useContext(TaskContext)
     const [title,setTitle]= useState("")
 
-    const handleSubmit = (e)=>{
+    useEffect(()=>{
+        if(items !== null){
+            setTitle(items.title)
+        }
+    },[items]) 
+
+
+    const handleSubmite = (e)=>{
             e.preventDefault()
-            editTask({title:title, id:Math.floor(Math.random() * 100000)})
+            editTask({title:title, id:items.id})
             setTitle("")
 
     }
     
-    const handleChange = (e)=>{
+    const handleChangee = (e)=>{
         setTitle(e.target.value)
     }
 
+    
 
     return (
   
         <>
-        <form className="border p-3 my-3" onSubmit={handleSubmit}>
+        <form className="border p-3 my-3" onSubmit={handleSubmite}>
              <h1 className="text-center display-4">Edit Task</h1>
 
             <div className="mb-3">
-                <input type="text" className="form-control" onChange={handleChange} value={title} placeholder="Type Title of Task"/>
+                <input type="text" className="form-control" onChange={handleChangee} value={title} placeholder="Type Title of Task"/>
             </div>
         
              <div className="d-grid gap-2">
             <button className="btn btn-success"  type="submit">Submit</button>
             </div>
         </form>
-        <TaskList />
         </>
   
     )

@@ -10,6 +10,8 @@ const initialState = [
 
 export const TaskContextProvider = (props) => {
     const [tasks, setTasks]= useState(initialState)
+    const [items, setItems]= useState(null)
+
     const removeItem =(id)=>{
         const newTask = tasks.filter((item)=> item.id !==id)
         setTasks(newTask)
@@ -22,10 +24,18 @@ export const TaskContextProvider = (props) => {
 
     const findTask = (id) =>{
         const task = tasks.find((item)=> item.id === id)
-        console.log(task) 
+        setItems(task)
+    }
+    const editTask = (task) =>
+    {
+        const editTasks = tasks.map((item)=>{
+            return item.id === task.id ? task: item
+        })
+        setTasks(editTasks)
+        setItems(null)
     }
     return (
-        <TaskContext.Provider value={{tasks,removeItem,addNewTask,findTask}}>
+        <TaskContext.Provider value={{tasks,removeItem,addNewTask,findTask,items,editTask}}>
             {props.children}
         </TaskContext.Provider>
     )
