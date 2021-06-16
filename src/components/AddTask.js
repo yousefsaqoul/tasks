@@ -31,7 +31,6 @@ export default function AddTask () {
             <button className="btn btn-success"  type="submit">Submit</button>
             </div>
         </form>
-        <TaskList />
         </>
   
     )
